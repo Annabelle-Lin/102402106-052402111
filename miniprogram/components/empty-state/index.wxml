@@ -1,0 +1,7 @@
+<view class="empty">
+  <image class="empty-img floaty" src="{{robot ? robotImg : mascot}}" mode="aspectFit" />
+  <text class="empty-txt">{{text || tip}}</text>
+  <text class="empty-sub" wx:if="{{sub}}">{{sub}}</text>
+  <view class="empty-btn" wx:if="{{btn}}" bindtap="onAction">{{btn}}</view>
+  <slot />
+</view>

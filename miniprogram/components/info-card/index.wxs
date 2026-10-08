@@ -1,0 +1,40 @@
+var t = {
+  statusClass: function (s) {
+    if (s === '待审核') return 'pill-wait'
+    if (s === '已驳回') return 'pill-off'
+    if (s === '已下架') return 'pill-off'
+    if (s === '已完成') return 'pill-done'
+    return 'pill-done'
+  },
+  // 物品 → 3D 缩略图文件名
+  imgOf: function (item) {
+    var key = (item.thumbKey || '').trim()
+    if (key) return '/assets/item-' + key + '.png'
+    var title = (item.title || '') + ''
+    var map = [
+      ['背包|书包|包', 'bag'],
+      ['手机|iphone|电话', 'phone'],
+      ['耳机|airpods|耳麦', 'earbuds'],
+      ['水杯|杯|水瓶|保温', 'bottle'],
+      ['围巾|巾', 'scarf'],
+      ['眼镜|镜', 'glasses'],
+      ['钥匙|key', 'key'],
+      ['电脑|笔记本|laptop|mac', 'laptop'],
+      ['钱包|卡包', 'wallet']
+    ]
+    var lower = title.toLowerCase()
+    for (var i = 0; i < map.length; i++) {
+      var reg = new RegExp(map[i][0], 'i')
+      if (reg.test(lower)) return '/assets/item-' + map[i][1] + '.png'
+    }
+    return '/assets/item-' + (item.type === '招领' ? 'wallet' : 'bag') + '.png'
+  },
+  typeClass: function (tp) {
+    return tp === '寻物' ? 'tag-lost' : 'tag-found'
+  },
+  // 类型胶囊文案：寻物 → Lost 风格保留中文；这里返回中文标签
+  typeText: function (tp) {
+    return tp === '寻物' ? '寻物' : '招领'
+  }
+}
+module.exports = t

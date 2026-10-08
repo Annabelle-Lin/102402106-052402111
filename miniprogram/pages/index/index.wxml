@@ -1,20 +1,81 @@
-<!-- 首页 · 早期朴素版：简单列表 -->
-<view class="home">
-  <view class="header">
-    <text class="title">校园失物招领</text>
-  </view>
+<!-- ============ 首页 · 1:1 还原设计稿 ============ -->
+<view class="home has-tabbar">
 
-  <view class="list" wx:if="{{list.length}}">
-    <view class="item" wx:for="{{list}}" wx:key="id">
-      <view class="item-top">
-        <text class="item-title">{{item.title}}</text>
-        <text class="item-type {{item.type === '寻物' ? 'type-lost' : 'type-found'}}">{{item.type}}</text>
+  <!-- ① 顶部：Logo + 标题 -->
+  <view class="topbar">
+    <view class="brand">
+      <view class="logo">
+        <view class="logo-half logo-l"></view>
+        <view class="logo-half logo-r"></view>
       </view>
-      <text class="item-place">{{item.place}}</text>
-      <text class="item-time">{{item.time}}</text>
+      <view class="brand-txt">
+        <text class="brand-title">校园失物招领</text>
+        <text class="brand-sub">小物件，大温暖</text>
+      </view>
     </view>
   </view>
 
-  <view class="empty" wx:elif="{{!loading}}">暂无信息</view>
+  <!-- ② 3D 校园图 + 浮动地点气泡 -->
+  <view class="hero">
+    <image class="hero-img" src="{{hero}}" mode="widthFix" />
+    <view
+      wx:for="{{spots}}"
+      wx:key="name"
+      class="spot spot-{{item.tone}}"
+      style="left:{{item.x}}%; top:{{item.y}}%;"
+      bindtap="tapSpot"
+    >
+      <view class="spot-ico spot-ico-{{item.tone}}">
+        <image class="spot-img" src="{{icoBook}}" mode="aspectFit" />
+      </view>
+      <text class="spot-txt">{{item.name}}</text>
+    </view>
+  </view>
+
+  <!-- ③ 搜索栏 -->
+  <view class="searchbar" bindtap="goSearch">
+    <image class="sb-ico" src="{{icoSearch}}" mode="aspectFit" />
+    <text class="sb-ph">搜索物品名称、地点…</text>
+    <view class="sb-btn">搜索</view>
+  </view>
+
+  <!-- ④ 最近失物 + 查看全部 -->
+  <view class="sec-head">
+    <text class="sec-title">最近失物</text>
+    <view class="sec-more" bindtap="goAll">
+      <text>查看全部</text>
+      <image class="more-arrow" src="{{icoArrow}}" mode="aspectFit" />
+    </view>
+  </view>
+
+  <!-- ⑤ 分类 Tab（药丸式） -->
+  <scroll-view class="tabs" scroll-x enable-flex>
+    <view
+      wx:for="{{tabs}}"
+      wx:key="*this"
+      class="tab {{active === index ? 'tab-on' : ''}}"
+      data-i="{{index}}"
+      bindtap="switchTab"
+    >{{item}}</view>
+  </scroll-view>
+
+  <!-- ⑥ 卡片流（两列） -->
+  <view class="feed" wx:if="{{list.length}}">
+    <info-card
+      wx:for="{{list}}"
+      wx:key="id"
+      item="{{item}}"
+      bind:click="goDetail"
+    />
+  </view>
+
+  <!-- 空状态 -->
+  <empty-state
+    wx:elif="{{!loading}}"
+    text="暂无信息，快去发布吧"
+    btn="去发布"
+    bind:action="goPublish"
+  />
+
   <view class="loading" wx:if="{{loading}}">加载中…</view>
 </view>
