@@ -1,5 +1,20 @@
-<!-- 首页 · 项目初始化占位 -->
+<!-- 首页 · 早期朴素版：简单列表 -->
 <view class="home">
-  <text class="title">{{title}}</text>
-  <text class="sub">项目初始化中，功能开发中…</text>
+  <view class="header">
+    <text class="title">校园失物招领</text>
+  </view>
+
+  <view class="list" wx:if="{{list.length}}">
+    <view class="item" wx:for="{{list}}" wx:key="id">
+      <view class="item-top">
+        <text class="item-title">{{item.title}}</text>
+        <text class="item-type {{item.type === '寻物' ? 'type-lost' : 'type-found'}}">{{item.type}}</text>
+      </view>
+      <text class="item-place">{{item.place}}</text>
+      <text class="item-time">{{item.time}}</text>
+    </view>
+  </view>
+
+  <view class="empty" wx:elif="{{!loading}}">暂无信息</view>
+  <view class="loading" wx:if="{{loading}}">加载中…</view>
 </view>
