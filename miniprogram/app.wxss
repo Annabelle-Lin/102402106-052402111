@@ -1,4 +1,4 @@
-/* 全局样式（项目初始化） */
+/* 校园失物招领 · 全局样式（早期朴素版） */
 page {
   background: #F5F5F5;
   font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
@@ -7,6 +7,6 @@ page {
   line-height: 1.6;
 }
 
-view, text, image {
+view, text, image, button {
   box-sizing: border-box;
 }
