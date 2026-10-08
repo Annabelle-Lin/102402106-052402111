@@ -1,0 +1,5 @@
+<!-- 首页 · 项目初始化占位 -->
+<view class="home">
+  <text class="title">{{title}}</text>
+  <text class="sub">项目初始化中，功能开发中…</text>
+</view>

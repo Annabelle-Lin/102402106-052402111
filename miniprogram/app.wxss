@@ -1,0 +1,12 @@
+/* 全局样式（项目初始化） */
+page {
+  background: #F5F5F5;
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+  color: #333;
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+
+view, text, image {
+  box-sizing: border-box;
+}
