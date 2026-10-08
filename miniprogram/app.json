@@ -3,12 +3,15 @@
     "pages/index/index"
   ],
   "window": {
-    "backgroundColor": "#F5F5F5",
+    "backgroundColor": "#FBF9F4",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#FFFFFF",
     "navigationBarTitleText": "校园失物招领",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
   },
+  "componentFramework": "glass-easel",
   "sitemapLocation": "sitemap.json",
-  "style": "v2"
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
 }

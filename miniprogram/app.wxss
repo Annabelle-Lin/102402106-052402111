@@ -1,12 +1,354 @@
-/* 校园失物招领 · 全局样式（早期朴素版） */
+/* ==========================================================================
+   校园失物招领 · 全局设计系统  v2（1:1 还原设计稿）
+   风格：3D 软萌 · 淡紫 + 薄荷绿双色 · 大圆角 · 柔光阴影
+   ========================================================================== */
+
 page {
-  background: #F5F5F5;
-  font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
-  color: #333;
+  /* —— 主色：淡紫 —— */
+  --purple:        #8B6FE8;
+  --purple-deep:   #7A5CE0;
+  --purple-light:  #A98BE8;
+  --purple-soft:   #EFE9FD;
+  --purple-tint:   #F3EEFE;
+
+  /* —— 辅色：薄荷绿 —— */
+  --mint:          #4DD9A8;
+  --mint-deep:     #3ECFA0;
+  --mint-light:    #7FE5C3;
+  --mint-soft:     #E3F9F0;
+  --mint-tint:     #F0FCF7;
+
+  /* —— 蓝（AI 横幅 / 点缀） —— */
+  --blue:          #94C5FF;
+  --blue-soft:     #E4F1FF;
+
+  /* —— 中性 —— */
+  --bg:            #FBF9F4;   /* 首页暖米白 */
+  --bg-lilac:      #F5F4FC;   /* 表单页淡薰衣草 */
+  --card:          #FFFFFF;
+  --card-lilac:    #FBFBFF;
+  --line:          #EFEEF6;
+  --line-soft:     #F4F3FA;
+
+  /* —— 文字 —— */
+  --text:          #2A2740;   /* 主标题 */
+  --text-sub:      #6E6B85;   /* 正文 */
+  --text-mute:     #9C99B0;   /* 辅助 */
+  --text-place:    #B7B4C7;   /* 占位 */
+
+  /* —— 状态色（低饱和柔和） —— */
+  --ok:            #3ECFA0;
+  --warn:          #F2B24C;
+  --danger:        #F08A8A;
+  --gray:          #B7B4C7;
+
+  /* —— 圆角 —— */
+  --r-xl:   28rpx;
+  --r-lg:   24rpx;
+  --r-md:   20rpx;
+  --r-sm:   14rpx;
+  --r-full: 999rpx;
+
+  /* —— 阴影（紫调柔光） —— */
+  --sh-card:  0 8rpx 32rpx rgba(139, 111, 232, 0.08);
+  --sh-float: 0 12rpx 40rpx rgba(139, 111, 232, 0.14);
+  --sh-mint:  0 10rpx 28rpx rgba(77, 217, 168, 0.30);
+  --sh-purple:0 12rpx 32rpx rgba(139, 111, 232, 0.32);
+
+  background: var(--bg);
+  font-family: -apple-system, "PingFang SC", "HarmonyOS Sans", "Helvetica Neue", sans-serif;
+  color: var(--text);
   font-size: 28rpx;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-view, text, image, button {
+view, text, scroll-view, input, textarea, image, button {
   box-sizing: border-box;
 }
+
+/* ==========================================================================
+   页面容器
+   ========================================================================== */
+.page {
+  min-height: 100vh;
+  padding-bottom: 40rpx;
+}
+.page-lilac {
+  min-height: 100vh;
+  background: var(--bg-lilac);
+  padding-bottom: 40rpx;
+}
+/* 有自定义 tabBar 的页面，给底部留白 */
+.has-tabbar {
+  padding-bottom: 180rpx;
+}
+
+/* ==========================================================================
+   光斑装饰（表单页角落的模糊彩色圆）
+   ========================================================================== */
+.blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(60rpx);
+  pointer-events: none;
+  z-index: 0;
+}
+.blob-pink   { background: rgba(255, 180, 214, 0.45); }
+.blob-mint   { background: rgba(140, 240, 205, 0.42); }
+.blob-purple { background: rgba(180, 150, 250, 0.34); }
+.blob-blue   { background: rgba(150, 205, 255, 0.36); }
+
+/* ==========================================================================
+   卡片
+   ========================================================================== */
+.card {
+  background: var(--card);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-card);
+}
+.card-lilac {
+  background: var(--card-lilac);
+  border-radius: var(--r-lg);
+  box-shadow: 0 6rpx 24rpx rgba(139, 111, 232, 0.06);
+}
+
+/* ==========================================================================
+   标签 / 胶囊
+   ========================================================================== */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8rpx;
+  height: 44rpx;
+  padding: 0 20rpx;
+  border-radius: var(--r-full);
+  font-size: 22rpx;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+.pill .dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+/* 寻物 = 薄荷绿 */
+.pill-lost   { background: var(--mint-soft); color: #2FA97E; }
+.pill-lost .dot { background: var(--mint-deep); }
+/* 招领 = 淡紫 */
+.pill-found  { background: var(--purple-soft); color: #6E4FC8; }
+.pill-found .dot { background: var(--purple); }
+/* 状态 */
+.pill-wait   { background: #FDF3E3; color: #C08A34; }
+.pill-wait .dot { background: var(--warn); }
+.pill-done   { background: var(--mint-soft); color: #2FA97E; }
+.pill-done .dot { background: var(--ok); }
+.pill-off    { background: #FCEAEA; color: #C25F5F; }
+.pill-off .dot { background: var(--danger); }
+.pill-gray   { background: #F1F0F7; color: #8E8BA3; }
+.pill-gray .dot { background: var(--gray); }
+
+/* 大号胶囊（分段控件） */
+.segment {
+  display: flex;
+  padding: 8rpx;
+  background: #EDEBF6;
+  border-radius: var(--r-full);
+}
+.segment .seg-item {
+  flex: 1;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  border-radius: var(--r-full);
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--text-sub);
+  transition: all .25s;
+}
+.segment .seg-item.on {
+  background: linear-gradient(135deg, #9B7DEE 0%, #8B6FE8 100%);
+  color: #fff;
+  box-shadow: 0 8rpx 20rpx rgba(139, 111, 232, 0.34);
+}
+
+/* ==========================================================================
+   按钮
+   ========================================================================== */
+.btn {
+  height: 96rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  border-radius: var(--r-full);
+  font-size: 32rpx;
+  font-weight: 600;
+  transition: all .2s;
+  border: none;
+}
+.btn::after { border: none; }
+
+.btn-primary {
+  background: linear-gradient(135deg, #9B7DEE 0%, #8B6FE8 100%);
+  color: #fff;
+  box-shadow: var(--sh-purple);
+}
+.btn-primary:active { transform: scale(.98); opacity: .92; }
+
+.btn-mint {
+  background: linear-gradient(135deg, #6FE3BE 0%, #3ECFA0 100%);
+  color: #fff;
+  box-shadow: var(--sh-mint);
+}
+.btn-mint:active { transform: scale(.98); opacity: .92; }
+
+.btn-ghost {
+  background: #fff;
+  color: var(--purple);
+  border: 2rpx solid var(--purple-soft);
+}
+.btn-ghost:active { background: var(--purple-tint); }
+
+.btn-plain {
+  background: #EFEEF6;
+  color: var(--text-sub);
+}
+
+/* ==========================================================================
+   表单行（发布页 / 实名认证页）
+   ========================================================================== */
+.form-card {
+  background: rgba(255,255,255,.86);
+  border-radius: var(--r-lg);
+  box-shadow: 0 6rpx 22rpx rgba(139, 111, 232, 0.06);
+  overflow: hidden;
+}
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 30rpx 28rpx;
+  position: relative;
+}
+.form-row + .form-row::before {
+  content: '';
+  position: absolute;
+  left: 112rpx; right: 28rpx; top: 0;
+  height: 2rpx;
+  background: var(--line-soft);
+}
+/* 图标底盘 */
+.form-ico {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: var(--purple-tint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.form-ico-green { background: var(--mint-tint); }
+.form-body { flex: 1; min-width: 0; }
+.form-label {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.35;
+}
+.form-input {
+  font-size: 28rpx;
+  color: var(--text);
+  width: 100%;
+  height: 44rpx;
+  line-height: 44rpx;
+}
+.form-input-ph { color: var(--text-place); font-weight: 400; }
+.form-arrow {
+  width: 36rpx;
+  height: 36rpx;
+  flex-shrink: 0;
+  opacity: .45;
+}
+
+/* ==========================================================================
+   区块标题
+   ========================================================================== */
+.sec-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32rpx;
+  margin-bottom: 20rpx;
+}
+.sec-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: .5rpx;
+}
+.sec-more {
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+  font-size: 26rpx;
+  color: var(--text-mute);
+}
+
+/* ==========================================================================
+   工具类
+   ========================================================================== */
+.row      { display: flex; align-items: center; }
+.between  { display: flex; align-items: center; justify-content: space-between; }
+.center   { display: flex; align-items: center; justify-content: center; }
+.col      { display: flex; flex-direction: column; }
+.flex1    { flex: 1; min-width: 0; }
+.ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mt8  { margin-top: 8rpx; }
+.mt16 { margin-top: 16rpx; }
+.mt24 { margin-top: 24rpx; }
+.mt32 { margin-top: 32rpx; }
+
+.gap8  { gap: 8rpx; }
+.gap12 { gap: 12rpx; }
+.gap16 { gap: 16rpx; }
+
+.text-sub  { color: var(--text-sub); }
+.text-mute { color: var(--text-mute); }
+.text-mint { color: var(--mint-deep); }
+.text-purple { color: var(--purple); }
+.t22 { font-size: 22rpx; }
+.t24 { font-size: 24rpx; }
+.t26 { font-size: 26rpx; }
+.t28 { font-size: 28rpx; }
+.t30 { font-size: 30rpx; }
+.bold { font-weight: 600; }
+.bolder { font-weight: 700; }
+
+/* 关键词高亮 */
+.hl { color: var(--purple); font-weight: 700; }
+
+/* ==========================================================================
+   通用动画
+   ========================================================================== */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10rpx); }
+}
+.floaty { animation: floaty 3s ease-in-out infinite; }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spin { animation: spin 1.1s linear infinite; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20rpx); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp .35s ease-out both; }

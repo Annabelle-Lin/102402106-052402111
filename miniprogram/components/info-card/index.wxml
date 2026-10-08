@@ -1,0 +1,39 @@
+<!-- 信息卡片 · 两列网格 · 1:1 还原设计稿 -->
+<view class="icard {{editable ? 'icard-editable' : ''}}" bindtap="onTap">
+
+  <!-- 缩略图区 -->
+  <view class="icard-thumb">
+    <image class="thumb-img" src="{{thumbSrc}}" mode="aspectFit" />
+    <!-- 右上角类型胶囊 -->
+    <view class="badge badge-{{badgeTone}}">
+      <view class="badge-dot"></view>
+      <text class="badge-txt">{{badgeText}}</text>
+    </view>
+
+    <!-- 编辑 / 删除（仅我的发布） -->
+    <view class="icard-acts" wx:if="{{editable}}">
+      <view class="icard-act icard-act-edit" catchtap="onEdit">
+        <image class="icard-act-ico" src="{{icoEdit}}" mode="aspectFit" />
+      </view>
+      <view class="icard-act icard-act-del" catchtap="onDelete">
+        <image class="icard-act-ico" src="{{icoTrash}}" mode="aspectFit" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 文字区 -->
+  <view class="icard-body">
+    <text class="icard-name">{{item.title}}</text>
+    <view class="icard-meta">
+      <text class="meta-place">{{item.place}}</text>
+      <text class="meta-sep">|</text>
+      <text class="meta-time">{{timeText}}</text>
+    </view>
+
+    <view class="icard-foot">
+      <image class="foot-pin" src="{{pinIcon}}" mode="aspectFit" />
+      <text class="foot-place">{{item.place}}</text>
+      <image class="foot-arrow" src="{{arrowIcon}}" mode="aspectFit" />
+    </view>
+  </view>
+</view>
